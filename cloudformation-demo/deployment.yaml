@@ -62,7 +62,7 @@ Resources:
       Handler: cloudformation-demo::cloudformation_demo.Function::FunctionHandler
       MemorySize: 128
       Role: !GetAtt lambdaFunctionIamRole.Arn
-      Runtime: dotnet6
+      Runtime: python3.10
       Timeout: 30
       Environment:
         Variables:
