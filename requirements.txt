@@ -1,2 +1,6 @@
 boto3
 aws-lambda-powertools
+pytest
+json
+logging
+typing
