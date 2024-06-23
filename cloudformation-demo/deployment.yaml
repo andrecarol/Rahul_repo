@@ -59,7 +59,7 @@ Resources:
     Properties:
       Description: "CloudFormation Demo Lambda"
       FunctionName: !Sub youtube-demo-cloudformation${Environment}
-      Handler: cloudformation-demo::cloudformation_demo.Function::FunctionHandler
+      Handler: cloudformation-demo.src.cloudformation-demo.Function.lambda_handler
       MemorySize: 128
       Role: !GetAtt lambdaFunctionIamRole.Arn
       Runtime: python3.10
