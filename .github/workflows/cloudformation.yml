@@ -30,20 +30,15 @@ jobs:
         python -m unittest discover -s . -p 'test_*.py'
         pytest
     
-    - name: Create artifact directory and copy files
+    - name: Package Lambda function
       run: |
         mkdir -p artifact/publish
-        rsync -av --progress --exclude artifact . artifact/publish/
-      
-    - name: Zip output
-      run: |
+        cp -r ./* artifact/publish/
         cd artifact/publish
         zip -r ../lambda.zip .
-        cd -
-            
+      
     - name: Copy CloudFormation Template
-      run: cp /Rahul_repo/cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
-    
+      run: cp ./deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v3
       with:
         name: lambda
