@@ -33,9 +33,10 @@ jobs:
     - name: Package Lambda function
       run: |
         mkdir -p artifact/publish
-        cp -r ./* artifact/publish/
+        rsync -av --exclude='artifact/' ./* artifact/publish/
         cd artifact/publish
         zip -r ../lambda.zip .
+      
       
     - name: Copy CloudFormation Template
       run: cp ./deployment.yaml ./artifact/deployment.yaml
