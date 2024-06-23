@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import Mock
 from typing import Dict, Any
-
 from lambda_function import lambda_handler
 
 class TestLambdaFunction(unittest.TestCase):
@@ -24,7 +23,7 @@ class TestLambdaFunction(unittest.TestCase):
                     "md5OfBody": "7b270e59b47ff90a553787216d55d91d",
                     "eventSource": "aws:sqs",
                     "eventSourceARN": "arn:aws:sqs:us-west-2:123456789012:MyQueue",
-                    "awsRegion": "eu-west-1"
+                    "awsRegion": "us-west-2"
                 }
             ]
         }
@@ -33,17 +32,19 @@ class TestLambdaFunction(unittest.TestCase):
         mock_context = Mock()
         mock_context.get_remaining_time_in_millis = Mock(return_value=10000)
         mock_context.aws_request_id = "test_request_id"
-        
-        # Create a string buffer to capture log output
-        log_output = []
-        mock_context.logger = Mock()
-        mock_context.logger.info = lambda message: log_output.append(message)
+
+        # Set up a logger to capture the log output
+        import logging
+        import io
+        log_stream = io.StringIO()
+        logging.basicConfig(stream=log_stream, level=logging.INFO)
 
         # Call the lambda handler
         lambda_handler(sqs_event, mock_context)
 
         # Verify the log output contains the expected message
-        self.assertIn("Processed message foobar", log_output)
+        log_contents = log_stream.getvalue()
+        self.assertIn("Processed message foobar", log_contents)
 
 if __name__ == '__main__':
     unittest.main()
