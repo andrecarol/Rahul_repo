@@ -42,8 +42,11 @@ class TestLambdaFunction(unittest.TestCase):
         # Call the lambda handler
         lambda_handler(sqs_event, mock_context)
 
-        # Verify the log output contains the expected message
+        # Capture and print the log output
         log_contents = log_stream.getvalue()
+        print(log_contents)  # Added print statement for demonstration
+
+        # Verify the log output contains the expected message
         self.assertIn("Processed message foobar", log_contents)
 
 if __name__ == '__main__':
