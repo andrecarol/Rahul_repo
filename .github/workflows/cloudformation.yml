@@ -42,7 +42,7 @@ jobs:
         cd -
             
     - name: Copy CloudFormation Template
-      run: cp Rahul_repo/cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
+      run: cp /Rahul_repo/cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
     
     - uses: actions/upload-artifact@v3
       with:
