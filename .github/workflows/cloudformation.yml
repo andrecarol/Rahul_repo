@@ -39,7 +39,7 @@ jobs:
       
       
     - name: Copy CloudFormation Template
-      run: cp ./deployment.yaml ./artifact/deployment.yaml
+      run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v3
       with:
         name: lambda
