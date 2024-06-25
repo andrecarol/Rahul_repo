@@ -61,7 +61,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+          aws-region: us-east-1
       
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
@@ -87,7 +87,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
+          aws-region: us-east-1
       
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
@@ -96,3 +96,5 @@ jobs:
           template: artifact/deployment.yaml
           parameter-overrides: "Environment="
           no-fail-on-empty-changeset: "1"
+      - name: Upload to S3
+        run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga

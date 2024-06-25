@@ -68,7 +68,7 @@ Resources:
         Variables:
           key1: value1 # A map of key-value pairs that the Lambda function can access
       Code:
-        S3Bucket: youtube-demo-cloudformation-packages
+        S3Bucket: youtube-demo-cloudformation-packages-konga
         S3Key: lambda.zip
       Tags:
         - Key: keyname
