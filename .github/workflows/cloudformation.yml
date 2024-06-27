@@ -53,7 +53,10 @@ jobs:
       with:
         name: lambda
         path: ./artifact
-
+    - name: Last directory after zip
+      run: |       
+        echo "The last current directory:"
+        pwd      
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
