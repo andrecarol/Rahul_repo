@@ -65,10 +65,10 @@ jobs:
         aws-region: eu-west-1
     
     - name: chmod
-      run: chmod -R 777 ./artifact/lambda.zip
+      run: chmod -R 777 ../lambda.zip
 
     - name: Upload to S3
-      run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages
+      run: aws s3 cp ../lambda.zip s3://youtube-demo-cloudformation-packages
                 
   prod-deploy:
     runs-on: ubuntu-latest
