@@ -31,7 +31,6 @@ jobs:
         pytest
     
     - name: Package Lambda function
-      working-directory: artifact/publish
       run: |
         echo "The first current directory:"
         pwd
@@ -42,13 +41,12 @@ jobs:
         echo "Content of the artifact/publish directory:"
         ls -la artifact/publish
         cd artifact/publish
-        zip -qq -r ../lambda.zip .
+        zip -r ../lambda.zip .
         echo "Actual Content of the artifact/publish directory after zip:"
         pwd
         ls -la        
         echo "The last current directory:"
-        pwd 
-  
+        pwd      
     - name: Copy CloudFormation Template
       run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v3
