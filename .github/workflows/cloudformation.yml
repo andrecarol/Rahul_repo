@@ -43,8 +43,7 @@ jobs:
         cd artifact/publish
         zip -r ../lambda.zip .
         echo "The last current directory:"
-        pwd
-      
+        pwd      
     - name: Copy CloudFormation Template
       run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v3
@@ -62,13 +61,16 @@ jobs:
         with:
           name: lambda
           path: artifact
-      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      - name: Print of the current directory
+        run: |
+          echo "The last current directory:"
+          pwd
       
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
