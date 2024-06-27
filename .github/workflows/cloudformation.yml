@@ -30,23 +30,20 @@ jobs:
         python -m unittest discover -s . -p 'test_*.py'
         pytest
     
-    - name: Package Lambda function
-      run: |
-        echo "The first current directory:"
-        pwd
-        mkdir -p artifact/publish
-        rsync -av --exclude='artifact/' ./* artifact/publish/
-        echo "Content of the artifact directory:"
-        ls -la artifact
-        echo "Content of the artifact/publish directory:"
-        ls -la artifact/publish
-        cd artifact/publish
-        zip -r ../lambda.zip .
-        echo "Actual Content of the artifact/publish directory after zip:"
-        pwd
-        ls -la        
-        echo "The last current directory:"
-        pwd 
+        - name: Install zip
+        uses: montudor/action-zip@v1
+          
+    - name: Zip output
+      run: zip -qq -r ../lambda.zip .
+      working-directory: artifact/publish
+        
+    - name: Copy Cloudformation Template
+      run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
+        
+    - uses: actions/upload-artifact@v3
+      with:
+        name: lambda
+        path: ./artifact
   
     - name: Copy CloudFormation Template
       run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
