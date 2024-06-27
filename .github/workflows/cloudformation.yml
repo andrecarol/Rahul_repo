@@ -43,7 +43,7 @@ jobs:
         cd artifact/publish
         zip -r ../lambda.zip .
         echo "Actuel Content of the artifact/publish directory after zip:"
-        ls -la artifact/publish        
+        ls pwd        
         echo "The last current directory:"
         pwd      
     - name: Copy CloudFormation Template
