@@ -47,7 +47,7 @@ jobs:
         ls -la        
         echo "The last current directory:"
         pwd 
-        ls -la artifact/lambda.zip     
+  
     - name: Copy CloudFormation Template
       run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v3
