@@ -58,7 +58,7 @@ jobs:
         echo "The last current directory:"
         pwd      
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -67,8 +67,8 @@ jobs:
     #- name: chmod
     #  run: chmod -R 777 ./artifact/lambda.zip
 
-    - name: Upload to S3
-      run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga
+#    - name: Upload to S3
+#      run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga
                 
   prod-deploy:
     runs-on: ubuntu-latest
@@ -81,7 +81,7 @@ jobs:
           name: lambda
           path: artifact
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -98,5 +98,5 @@ jobs:
           template: artifact/deployment.yaml
           parameter-overrides: "Environment=-Prod"
           no-fail-on-empty-changeset: "1"
-      #- name: Upload to S3
-        #run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga/
+      - name: Upload to S3
+        run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga/
