@@ -1,4 +1,3 @@
-# cloudformation-demo/src/Function.py
 import json
 import logging
 from typing import Any, Dict

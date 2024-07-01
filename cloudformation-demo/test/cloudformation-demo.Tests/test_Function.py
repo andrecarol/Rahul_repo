@@ -12,7 +12,7 @@ class TestLambdaFunction(unittest.TestCase):
                 {
                     "messageId": "1a2b3c4d-5678-90ab-cdef-EXAMPLE11111",
                     "receiptHandle": "MessageReceiptHandle",
-                    "body": "KONGA GOAT",
+                    "body": "foobar",
                     "attributes": {
                         "ApproximateReceiveCount": "1",
                         "SentTimestamp": "1523232000000",
@@ -47,7 +47,7 @@ class TestLambdaFunction(unittest.TestCase):
         print(log_contents)  # Added print statement for demonstration
 
         # Verify the log output contains the expected message
-        self.assertIn("Processed message KONGA GOAT", "Processed message KONGA GOAT")
+        self.assertIn("Processed message foobar", "Processed message foobar")
 
 if __name__ == '__main__':
     unittest.main()
