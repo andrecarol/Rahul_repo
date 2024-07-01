@@ -90,7 +90,10 @@ jobs:
         run: |
           echo "The last current directory:"
           pwd
-      
+      - name: Last directory after zip
+        run: |       
+          echo "The content of ARTIFACT directory:"
+          ls -la ./artifact      
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
