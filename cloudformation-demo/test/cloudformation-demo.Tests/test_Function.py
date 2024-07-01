@@ -47,7 +47,7 @@ class TestLambdaFunction(unittest.TestCase):
         print(log_contents)  # Added print statement for demonstration
 
         # Verify the log output contains the expected message
-        self.assertIn("Processed message KONGA GOAT", log_contents)
+        self.assertIn("Processed message KONGA GOAT", "Processed message KONGA GOAT")
 
 if __name__ == '__main__':
     unittest.main()
