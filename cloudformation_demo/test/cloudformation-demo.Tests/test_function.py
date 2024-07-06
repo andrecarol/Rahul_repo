@@ -1,7 +1,10 @@
 import unittest
 from unittest.mock import Mock
 from typing import Dict, Any
-from lambda_function import lambda_handler
+import cloudformation_demo
+#from cloudformation_demo.src.la_function import lambda_handler
+
+#from lambda_function import lambda_handler
 
 class TestLambdaFunction(unittest.TestCase):
 
@@ -40,7 +43,7 @@ class TestLambdaFunction(unittest.TestCase):
         logging.basicConfig(stream=log_stream, level=logging.INFO)
 
         # Call the lambda handler
-        lambda_handler(sqs_event, mock_context)
+        cloudformation_demo.lambda_handler(sqs_event, mock_context)
 
         # Capture and print the log output
         log_contents = log_stream.getvalue()

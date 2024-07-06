@@ -1,0 +1,1 @@
+from cloudformation_demo.src.la_function import lambda_handler
