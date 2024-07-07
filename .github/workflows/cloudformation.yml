@@ -48,7 +48,7 @@ jobs:
         echo "The last current directory:"
         pwd      
     - name: Copy CloudFormation Template
-      run: cp ./cloudformation-demo/deployment.yaml ./artifact/deployment.yaml
+      run: cp ./cloudformation_demo/deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v4
       with:
         name: lambda
