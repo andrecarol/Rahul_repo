@@ -1,0 +1,1 @@
+from src.la_function import lambda_handler
