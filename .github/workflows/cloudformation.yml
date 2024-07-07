@@ -27,8 +27,10 @@ jobs:
 
     - name: Run tests
       run: |
+        echo "The current directory is:"
+        pwd
         python -m unittest discover -s . -p 'test_*.py'
-        pytest
+
     
     - name: Package Lambda function
       run: |
