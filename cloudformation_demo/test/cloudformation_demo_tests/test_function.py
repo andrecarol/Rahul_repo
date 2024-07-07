@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock
 from typing import Dict, Any
-import src
+#import src
 #from cloudformation_demo.src.la_function import lambda_handler
 
 from lambda_function import lambda_handler
