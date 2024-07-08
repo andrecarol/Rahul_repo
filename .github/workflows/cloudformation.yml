@@ -100,7 +100,7 @@ jobs:
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: youtube-cloudformation-demmmmmo-prod
+          name: youtube-cloudformation-demmmmmoo-prod
           template: ./artifact/deployment.yaml
           parameter-overrides: "Environment=-Prod"
           no-fail-on-empty-changeset: "1"
