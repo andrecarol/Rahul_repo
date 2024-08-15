@@ -43,7 +43,7 @@ jobs:
         echo "Content of the artifact/publish directory:"
         ls -la artifact/publish
         cd artifact/publish
-        zip -r ../lambda.zip .
+        zip -r ../lambda.zip . -x deployment.yaml
         echo "Actual Content of the artifact/publish directory after zip:"
         pwd
         ls -la        
