@@ -1,1 +1,1 @@
-#from src.la_function import lambda_handler
+#from .la_function import lambda_handler
