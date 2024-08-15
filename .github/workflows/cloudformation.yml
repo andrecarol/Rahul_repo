@@ -37,13 +37,13 @@ jobs:
         echo "The first current directory:"
         pwd
         mkdir -p artifact/publish
-        rsync -av --exclude='artifact/' ./* artifact/publish/
+        rsync -av --exclude='artifact/' --exclude='cloudformation_demo/deployment.yaml' ./* artifact/publish/
         echo "Content of the artifact directory:"
         ls -la artifact
         echo "Content of the artifact/publish directory:"
         ls -la artifact/publish
         cd artifact/publish
-        zip -r ../lambda.zip . -x deployment.yaml
+        zip -r ../lambda.zip . -x ./cloudformation_demo/deployment.yaml
         echo "Actual Content of the artifact/publish directory after zip:"
         pwd
         ls -la        
