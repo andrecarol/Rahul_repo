@@ -39,7 +39,7 @@ jobs:
         echo "The first current directory:"
         pwd
         mkdir -p artifact/publish   
-        rsync -av --progress --exclude 'les_librairies/' cloudformation_demo/src/ artifact/publish/
+        rsync -av --progress cloudformation_demo/ artifact/publish/
         cp -r ./cloudformation_demo/src/les_librairies/* ./artifact/publish/  
         echo "Content of the artifact directory:"
         ls -la artifact
