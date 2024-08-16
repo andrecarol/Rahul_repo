@@ -1,8 +1,8 @@
 import json
 import logging
 from typing import Any, Dict
-from les_librairies.aws_lambda_powertools import Logger
-from les_librairies.aws_lambda_powertools.utilities.typing import LambdaContext
+from aws_lambda_powertools import Logger
+from aws_lambda_powertools.utilities.typing import LambdaContext
 
 logger = Logger(service="cloudformation_demo")
 
