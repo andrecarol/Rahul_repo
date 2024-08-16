@@ -37,20 +37,20 @@ jobs:
         echo "The first current directory:"
         pwd
         mkdir -p artifact/publish
-        rsync -av --exclude='artifact/' --exclude='cloudformation_demo/deployment.yaml' ./* artifact/publish/
+        rsync -av --exclude='artifact/' --exclude='cloudformation_demo/src/deployment.yaml' ./* artifact/publish/
         echo "Content of the artifact directory:"
         ls -la artifact
         echo "Content of the artifact/publish directory:"
         ls -la artifact/publish
         cd artifact/publish
-        zip -r ../lambda.zip . -x ./cloudformation_demo/deployment.yaml
+        zip -r ../lambda.zip . -x ./cloudformation_demo/src/deployment.yaml
         echo "Actual Content of the artifact/publish directory after zip:"
         pwd
         ls -la        
         echo "The last current directory:"
         pwd      
     - name: Copy CloudFormation Template
-      run: cp ./cloudformation_demo/deployment.yaml ./artifact/deployment.yaml
+      run: cp ./cloudformation_demo/src/deployment.yaml ./artifact/deployment.yaml
     - uses: actions/upload-artifact@v4
       with:
         name: lambda
