@@ -43,7 +43,7 @@ jobs:
         echo "Content of the artifact/publish directory:"
         ls -la artifact/publish
         cd artifact/publish
-        zip -r ../lambda.zip .
+        zip -r ../la_function.zip .
         echo "Actual Content of the artifact/publish directory after zip:"
         pwd
         ls -la        
@@ -67,10 +67,10 @@ jobs:
         aws-region: us-east-1
     
     #- name: chmod
-    #  run: chmod -R 777 ./artifact/lambda.zip
+    #  run: chmod -R 777 ./artifact/la_function.zip
 
 #    - name: Upload to S3
-#      run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga/
+#      run: aws s3 cp ./artifact/la_function.zip s3://youtube-demo-cloudformation-packages-konga/
                 
   prod-deploy:
     runs-on: ubuntu-latest
@@ -97,7 +97,7 @@ jobs:
           echo "The content of ARTIFACT directory:"
           ls -la ./artifact  
       - name: Upload to S3
-        run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga/
+        run: aws s3 cp ./artifact/la_function.zip s3://youtube-demo-cloudformation-packages-konga/
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
@@ -106,4 +106,4 @@ jobs:
           parameter-overrides: "Environment=-Prod"
           no-fail-on-empty-changeset: "1"
 #      - name: Upload to S3
-#        run: aws s3 cp ./artifact/lambda.zip s3://youtube-demo-cloudformation-packages-konga
+#        run: aws s3 cp ./artifact/la_function.zip s3://youtube-demo-cloudformation-packages-konga
