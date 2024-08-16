@@ -37,7 +37,7 @@ jobs:
         echo "The first current directory:"
         pwd
         mkdir -p artifact/publish
-        cp ./cloudformation_demo/la_function.py ./artifact/publish/la_function.py        
+        cp ./cloudformation_demo/src/la_function.py ./artifact/publish/la_function.py        
         echo "Content of the artifact directory:"
         ls -la artifact
         echo "Content of the artifact/publish directory:"
