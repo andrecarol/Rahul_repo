@@ -53,5 +53,8 @@ class TestLambdaFunction(unittest.TestCase):
         # Verify the log output contains the expected message
         self.assertIn("Processing the message...the message...foobar", log_contents)
 
+        print("Tout est OK")
+
+
 if __name__ == '__main__':
     unittest.main()
