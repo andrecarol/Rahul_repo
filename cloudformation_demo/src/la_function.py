@@ -22,5 +22,5 @@ def process_message(message: Dict[str, Any], context: LambdaContext) -> None:
     
     # Simulate some processing work
     # TODO: Replace this with actual processing logic
-    logger.info("Processing the message...")
+    logger.info(f"Processing the message...{message['body']}")
     logger.info("Async task completed")

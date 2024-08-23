@@ -4,7 +4,7 @@ from typing import Dict, Any
 #import src
 #from cloudformation_demo.src.la_function import lambda_handler
 
-from lambda_function import lambda_handler
+from src import la_function
 
 class TestLambdaFunction(unittest.TestCase):
 
@@ -15,7 +15,7 @@ class TestLambdaFunction(unittest.TestCase):
                 {
                     "messageId": "1a2b3c4d-5678-90ab-cdef-EXAMPLE11111",
                     "receiptHandle": "MessageReceiptHandle",
-                    "body": "foobar",
+                    "body": "the message...foobar",
                     "attributes": {
                         "ApproximateReceiveCount": "1",
                         "SentTimestamp": "1523232000000",
@@ -43,14 +43,14 @@ class TestLambdaFunction(unittest.TestCase):
         logging.basicConfig(stream=log_stream, level=logging.INFO)
 
         # Call the lambda handler
-        lambda_handler(sqs_event, mock_context)
+        la_function.lambda_handler(sqs_event, mock_context)
 
         # Capture and print the log output
         log_contents = log_stream.getvalue()
-        print(log_contents)  # Added print statement for demonstration
+        #print(log_contents)  # Added print statement for demonstration
 
         # Verify the log output contains the expected message
-        self.assertIn("Processed message foobar", log_contents)
+        self.assertIn("Processing the message...the message...foobar", log_contents)
 
 if __name__ == '__main__':
     unittest.main()
