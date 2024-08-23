@@ -29,8 +29,11 @@ jobs:
       run: |
         echo "The current directory is:"
         pwd
+        cd cloudformation_demo/test/cloudformation_demo_tests
         python -m unittest discover -s . -p 'test_*.py'
-
+        cd pwd
+        echo "The current directory is:"
+        pwd
 
 #        cp ./cloudformation_demo/src/la_function.py ./artifact/publish/la_function.py  
 #        cp -r ./cloudformation_demo/src/les_librairies/* ./artifact/publish/              
