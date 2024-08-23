@@ -15,7 +15,7 @@ class TestLambdaFunction(unittest.TestCase):
                 {
                     "messageId": "1a2b3c4d-5678-90ab-cdef-EXAMPLE11111",
                     "receiptHandle": "MessageReceiptHandle",
-                    "body": "the message...foobar",
+                    "body": "the message...konga",
                     "attributes": {
                         "ApproximateReceiveCount": "1",
                         "SentTimestamp": "1523232000000",
