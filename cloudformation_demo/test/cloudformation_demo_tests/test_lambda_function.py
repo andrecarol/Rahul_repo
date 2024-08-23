@@ -5,7 +5,7 @@ from typing import Dict, Any
 #from cloudformation_demo.src.la_function import lambda_handler
 
 #from src import la_function
-from lambda_function import lambda_handler
+from la_function import lambda_handler
 
 class TestLambdaFunction(unittest.TestCase):
 
