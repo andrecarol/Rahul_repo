@@ -4,7 +4,8 @@ from typing import Dict, Any
 #import src
 #from cloudformation_demo.src.la_function import lambda_handler
 
-from src import la_function
+#from src import la_function
+from lambda_function import lambda_handler
 
 class TestLambdaFunction(unittest.TestCase):
 
@@ -43,8 +44,8 @@ class TestLambdaFunction(unittest.TestCase):
         logging.basicConfig(stream=log_stream, level=logging.INFO)
 
         # Call the lambda handler
-        la_function.lambda_handler(sqs_event, mock_context)
-
+        #la_function.lambda_handler(sqs_event, mock_context)
+        lambda_handler(sqs_event, mock_context)
         # Capture and print the log output
         log_contents = log_stream.getvalue()
         #print(log_contents)  # Added print statement for demonstration
