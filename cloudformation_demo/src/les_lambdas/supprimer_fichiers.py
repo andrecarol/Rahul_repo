@@ -21,7 +21,7 @@ def lambda_handler(event, context):
         # Check if the object's key is not 'empty_file.txt'
         if obj['Key'] != 'folderB/empty_file.txt':
             # Calculate the date ten minutes ago
-            one_month_ago = datetime.now() - timedelta(minutes=10)
+            one_month_ago = datetime.now() - timedelta(minutes=3)
             
             # Check if the object was created one month ago or earlier
             if last_modified < one_month_ago:
