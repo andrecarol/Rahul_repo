@@ -7,7 +7,7 @@ import os
 #  my_env_variable = os.getenv('MY_ENV_VARIABLE')
 
 def lambda_handler(event, context):
-    s3 = boto3.client('s3', "eu-west-3")
+    s3 = boto3.client('s3', "us-east-1")
     bucket_name = os.getenv('BUCKET_ARCHIVAGE')
     folderA = 'folderA/'
     folderB = 'folderB/'
