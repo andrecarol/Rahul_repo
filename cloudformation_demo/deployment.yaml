@@ -161,7 +161,7 @@ Resources:
           BUCKET_ARCHIVAGE: !Ref BucketName
       Code:
         S3Bucket: !Ref BucketName
-        S3Key: deplacer_fichiers.zip
+        S3Key: la_function.zip
 
 
 
@@ -178,7 +178,7 @@ Resources:
           BUCKET_ARCHIVAGE: !Ref BucketName
       Code:
         S3Bucket: !Ref BucketName
-        S3Key: supprimer_fichiers.zip
+        S3Key: la_function.zip
 
 
   LambdaExecutionRole:
