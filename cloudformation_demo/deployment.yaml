@@ -158,9 +158,9 @@ Resources:
       Timeout: 60  # Adjust based on your Lambda function's requirements
       Environment: 
         Variables:
-          BUCKET_ARCHIVAGE: !ref BucketName
+          BUCKET_ARCHIVAGE: !Ref BucketName
       Code:
-        S3Bucket: !ref BucketName
+        S3Bucket: !Ref BucketName
         S3Key: deplacer_fichiers.zip
 
 
@@ -175,9 +175,9 @@ Resources:
       Timeout: 60  # Adjust based on your Lambda function's requirements
       Environment: 
         Variables:
-          BUCKET_ARCHIVAGE: !ref BucketName
+          BUCKET_ARCHIVAGE: !Ref BucketName
       Code:
-        S3Bucket: !ref BucketName
+        S3Bucket: !Ref BucketName
         S3Key: supprimer_fichiers.zip
 
 
