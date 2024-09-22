@@ -5,6 +5,26 @@ Parameters:
   Environment:
     Description: Environment Name
     Type: String
+  FirstLambdaFunctionName:
+    Type: String
+    Description: Name of the Lambda function to trigger
+    Default: 'threeminuteslambdafunction'
+  SecondLambdaFunctionName:
+    Type: String
+    Description: Name of the Lambda function to trigger
+    Default: 'tenminuteslambdafunction'    
+  FirstEventBridgeRuleName:
+    Type: String
+    Description: Name of the First EventBridge rule
+    Default: 'ThreeMinutesFirstLambdaTrigger'
+  SecondEventBridgeRuleName:
+    Type: String
+    Description: Name of the Second EventBridge rule
+    Default: 'TenMinutesFirstLambdaTrigger'
+  BucketName:
+    Type: String
+    Description: Name of the S3 bucket
+    Default: 'eventbridgelambdaforarchivebucket'
 
 Resources:
   sqsQueue:
@@ -60,7 +80,7 @@ Resources:
       Description: "CloudFormation Demo Lambda"
       FunctionName: !Sub youtube-demo-cloudformation${Environment}
       #Handler: publish.cloudformation-demo.src.Function.lambda_handler
-      Handler: src.la_function.lambda_handler
+      Handler: src.les_lambdas.la_function.lambda_handler
       MemorySize: 128
       Role: !GetAtt lambdaFunctionIamRole.Arn
       Runtime: python3.10
@@ -74,3 +94,155 @@ Resources:
       Tags:
         - Key: keyname
           Value: value
+
+
+  MyBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      AccessControl: Private
+      LifecycleConfiguration:
+        Rules:
+          - Id: kongaRule2
+            Prefix: folderB/
+            Status: Enabled
+            ExpirationInDays: 2
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MyBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyDeleteSpecificFile
+            Effect: Deny
+            Principal: "*"
+            Action: s3:DeleteObject
+            Resource: 
+              - !Sub "arn:aws:s3:::${MyBucket}/folderA/empty_file.txt"
+              - !Sub "arn:aws:s3:::${MyBucket}/folderB/empty_file.txt"
+
+
+  FirstEventBridgeRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Ref FirstEventBridgeRuleName
+      Description: "3 minutes trigger for Lambda function"
+      ScheduleExpression: "cron(0/3 * * * ? *)"  # Runs every 3 minutes
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt FirstLambdaFunction.Arn
+          Id: "TargetFirstLambdaFunction"
+
+
+
+  SecondEventBridgeRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Ref SecondEventBridgeRuleName
+      Description: "10 minutes trigger for Lambda function"
+      ScheduleExpression: "cron(*/10 * * * ? *)"  # Runs every 10 minutes
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt SecondLambdaFunction.Arn
+          Id: "TargetSecondLambdaFunction"
+
+  FirstLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref FirstLambdaFunctionName
+      Handler: src.les_lambdas.deplacer_fichiers.lambda_handler  # Replace with your actual handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.8  # Adjust according to your Lambda function's runtime
+      Timeout: 60  # Adjust based on your Lambda function's requirements
+      Environment: 
+        Variables:
+          BUCKET_ARCHIVAGE: !ref BucketName
+      Code:
+        S3Bucket: !ref BucketName
+        S3Key: deplacer_fichiers.zip
+
+
+
+  SecondLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref SecondLambdaFunctionName
+      Handler: src.les_lambdas.supprimer_fichiers.lambda_handler  # Replace with your actual handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.8  # Adjust according to your Lambda function's runtime
+      Timeout: 60  # Adjust based on your Lambda function's requirements
+      Environment: 
+        Variables:
+          BUCKET_ARCHIVAGE: !ref BucketName
+      Code:
+        S3Bucket: !ref BucketName
+        S3Key: supprimer_fichiers.zip
+
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: logs:CreateLogGroup
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*          
+              - Effect: Allow
+                Action: # La différence est qu'ICI J'ai réduit le nombre d'actions
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                  - s3:PutObjectAcl
+                  - s3:ReplicateObject
+                  - s3:GetObjectAcl
+                Resource:
+                  - !Sub "arn:aws:s3:::${BucketName}"
+                  - !Sub "arn:aws:s3:::${BucketName}/*"
+
+  PermissionForEventsToInvokeFirstLambda: 
+    Type: AWS::Lambda::Permission
+    Properties: 
+      FunctionName: !Ref FirstLambdaFunction
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt FirstEventBridgeRule.Arn
+
+  PermissionForEventsToInvokeSecondLambda: 
+    Type: AWS::Lambda::Permission
+    Properties: 
+      FunctionName: !Ref SecondLambdaFunction
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt SecondEventBridgeRule.Arn
+
+Outputs:
+  EventBridgeRuleArn:
+    Description: ARN of the EventBridge rule
+    Value: !GetAtt FirstEventBridgeRule.Arn
+  FirstLambdaFunctionArn:
+    Description: ARN of the Lambda function
+    Value: !GetAtt FirstLambdaFunction.Arn
+  SecondEventBridgeRuleArn:
+    Description: ARN of the EventBridge rule
+    Value: !GetAtt SecondEventBridgeRule.Arn
+  SecondLambdaFunctionArn:
+    Description: ARN of the Lambda function
+    Value: !GetAtt SecondLambdaFunction.Arn
