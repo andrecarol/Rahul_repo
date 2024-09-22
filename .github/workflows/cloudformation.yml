@@ -29,7 +29,7 @@ jobs:
       run: |
         echo "The current directory is:"
         pwd
-        cp ./cloudformation_demo/src/les_lambdas/la_function.py ./cloudformation_demo/test/cloudformation_demo_tests/
+        cp ./cloudformation_demo/src/la_function.py ./cloudformation_demo/test/cloudformation_demo_tests/
         echo "Content of the ./cloudformation_demo/test/cloudformation_demo_tests/ directory:" 
         ls -la ./cloudformation_demo/test/cloudformation_demo_tests/       
         python -m unittest discover -s cloudformation_demo/test/cloudformation_demo_tests -p 'test_*.py'
