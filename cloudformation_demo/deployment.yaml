@@ -160,7 +160,7 @@ Resources:
         Variables:
           BUCKET_ARCHIVAGE: !Ref BucketName
       Code:
-        S3Bucket: !Ref BucketName
+        S3Bucket: youtube-demo-cloudformation-packages-konga
         S3Key: la_function.zip
 
 
@@ -177,7 +177,7 @@ Resources:
         Variables:
           BUCKET_ARCHIVAGE: !Ref BucketName
       Code:
-        S3Bucket: !Ref BucketName
+        S3Bucket: youtube-demo-cloudformation-packages-konga
         S3Key: la_function.zip
 
 
