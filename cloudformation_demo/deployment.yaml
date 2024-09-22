@@ -107,6 +107,7 @@ Resources:
             Prefix: folderB/
             Status: Enabled
             ExpirationInDays: 2
+    DeletionPolicy: Retain # Pour empêcher que le bucket soit supprimé quand on supprime la stack
 
   BucketPolicy:
     Type: AWS::S3::BucketPolicy
